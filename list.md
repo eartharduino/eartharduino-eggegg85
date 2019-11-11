@@ -20,3 +20,40 @@
 18	綜合應用
 19	四軸飛行器TELLO
 20	四軸飛行器TELLO EDU
+/*  Lab8 LCD 程式碼*/
+
+/*以下為註解 
+LCD 接線方式
+GND --> GND
+VCC --> 5V
+SDA --> A4
+SCL --> A5
+*/
+
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+int x=2;                      //設定整數型態x變數
+ /*設定 LCD I2C 位址,市面上兩種不同晶片有不同設定方式,如果第一個不行請改第二個 */  
+LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE); 
+//LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  
+void setup()
+{
+  Serial.begin(9600); 
+  lcd.begin(16, 2);     //初始化 LCD，代表我們使用的LCD一行有16個字元，共2行。
+  lcd.backlight();      //開啟背光   
+}
+
+void loop()
+{
+  delay(200); 
+  lcd.home();   //LCD歸零，清除所有內容
+  lcd.clear();  //LCD歸零，清除所有內容
+
+  lcd.setCursor(0, 1);        // 設定游標位置在第一行第一個字
+  lcd.print(", egg:(!★"); //LCD顯示" "內的文字
+  lcd.setCursor(0, 0);        // 設定游標位置在第二行第一個字  
+  lcd.print(x);               //LCD顯示x的內容
+  delay(500);
+ x=x*2;
+ 
+}
